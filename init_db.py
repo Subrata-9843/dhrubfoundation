@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from app import app, db
 from models import Admin, Donation
-
+from werkzeug.security import generate_password_hash
 def initialize_db():
     with app.app_context():
         # Create all database tables
