@@ -1,0 +1,50 @@
+{% extends "admin/base.html" %}
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold">Admin Management</h1>
+    <a href="{{ url_for('create_admin') }}" class="bg-sea text-white px-4 py-2 rounded-lg">Add New Admin</a>
+  </div>
+  
+  <div class="bg-white rounded-lg shadow overflow-hidden">
+    <table class="min-w-full">
+      <thead class="bg-gray-50">
+        <tr>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Username</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Role</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-200">
+        {% for admin in admins %}
+        <tr>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="font-medium">{{ admin.username }}</div>
+            <div class="text-sm text-gray-500">Created: {{ admin.created_at.strftime('%d %b %Y') }}</div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">{{ admin.email }}</td>
+          <td class="px-6 py-4 whitespace-nowrap">{{ admin.role|title }}</td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <span class="px-2 py-1 text-xs rounded-full 
+              {% if admin.is_active %}bg-green-100 text-green-800
+              {% else %}bg-red-100 text-red-800{% endif %}">
+              {% if admin.is_active %}Active{% else %}Inactive{% endif %}
+            </span>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            <a href="{{ url_for('edit_admin', aid=admin.id) }}" class="text-blue-500 hover:text-blue-700 mr-3">Edit</a>
+            <form method="POST" action="{{ url_for('toggle_admin', aid=admin.id) }}" class="inline">
+              <button type="submit" class="text-red-500 hover:text-red-700">
+                {% if admin.is_active %}Disable{% else %}Enable{% endif %}
+              </button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

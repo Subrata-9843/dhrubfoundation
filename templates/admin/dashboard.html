@@ -1,0 +1,87 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-2xl font-bold mb-8">Admin Dashboard</h1>
+  
+  <!-- Stats Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <div class="bg-white rounded-lg shadow p-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-gray-600">Total Donations</p>
+          <h2 class="text-3xl font-bold">{{ total_donations }}</h2>
+        </div>
+        <div class="bg-blue-100 text-blue-600 p-3 rounded-full">
+          <i data-feather="dollar-sign"></i>
+        </div>
+      </div>
+    </div>
+    
+    <div class="bg-white rounded-lg shadow p-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-gray-600">Total Amount</p>
+          <h2 class="text-3xl font-bold">₹{{ "%.2f"|format(total_amount) }}</h2>
+        </div>
+        <div class="bg-green-100 text-green-600 p-3 rounded-full">
+          <i data-feather="credit-card"></i>
+        </div>
+      </div>
+    </div>
+    
+    <div class="bg-white rounded-lg shadow p-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-gray-600">Verified</p>
+          <h2 class="text-3xl font-bold">{{ verified_count }}/{{ recent_donations|length }}</h2>
+        </div>
+        <div class="bg-purple-100 text-purple-600 p-3 rounded-full">
+          <i data-feather="check-circle"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Recent Donations Table -->
+  <div class="bg-white rounded-lg shadow overflow-hidden mb-8">
+    <div class="p-6 border-b flex justify-between items-center">
+      <h2 class="text-xl font-bold">Recent Donations</h2>
+      <a href="{{ url_for('view_donations') }}" class="text-blue-500 hover:underline">View All</a>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="min-w-full">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Amount</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200">
+          {% for donation in recent_donations %}
+          <tr>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="font-medium">{{ donation.name }}</div>
+              <div class="text-sm text-gray-500">{{ donation.email }}</div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">₹{{ "%.2f"|format(donation.amount) }}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              {{ donation.timestamp.strftime('%d %b %Y') }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <span class="px-2 py-1 text-xs rounded-full 
+                {% if donation.is_verified %}bg-green-100 text-green-800
+                {% else %}bg-yellow-100 text-yellow-800{% endif %}">
+                {% if donation.is_verified %}Verified{% else %}Pending{% endif %}
+              </span>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

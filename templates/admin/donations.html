@@ -1,0 +1,74 @@
+{% extends "admin/base.html" %}
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold">Donation Management</h1>
+    <div class="flex space-x-4">
+      <a href="{{ url_for('export_donations', format='csv') }}" class="bg-blue-500 text-white px-4 py-2 rounded-lg">Export CSV</a>
+      <a href="{{ url_for('export_donations', format='excel') }}" class="bg-green-500 text-white px-4 py-2 rounded-lg">Export Excel</a>
+    </div>
+  </div>
+  
+  <div class="bg-white rounded-lg shadow overflow-hidden">
+    <div class="p-6 border-b flex items-center justify-between">
+      <h2 class="text-xl font-bold">All Donations</h2>
+      <form method="GET" class="flex space-x-2">
+        <input type="text" name="email" placeholder="Search by email" value="{{ request.args.get('email', '') }}" 
+               class="px-4 py-2 border rounded-lg">
+        <button type="submit" class="bg-sea text-white px-4 py-2 rounded-lg">Search</button>
+      </form>
+    </div>
+    
+    <div class="overflow-x-auto">
+      <table class="min-w-full">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">ID</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Amount</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200">
+          {% for donation in donations %}
+          <tr>
+            <td class="px-6 py-4 whitespace-nowrap">{{ donation.id }}</td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="font-medium">{{ donation.name }}</div>
+              <div class="text-sm text-gray-500">{{ donation.email }}</div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">₹{{ "%.2f"|format(donation.amount) }}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              {{ donation.timestamp.strftime('%d %b %Y') }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <span class="px-2 py-1 text-xs rounded-full 
+                {% if donation.is_verified %}bg-green-100 text-green-800
+                {% else %}bg-yellow-100 text-yellow-800{% endif %}">
+                {% if donation.is_verified %}Verified{% else %}Pending{% endif %}
+              </span>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm">
+              <form method="POST" action="{{ url_for('verify_donation', id=donation.id) }}" class="inline">
+                <button type="submit" class="text-blue-500 hover:text-blue-700 mr-2">
+                  {% if donation.is_verified %}
+                  Unverify
+                  {% else %}
+                  Verify
+                  {% endif %}
+                </button>
+              </form>
+              <a href="{{ url_for('static', filename=donation.invoice_path) }}" target="_blank" class="text-green-500 hover:text-green-700">
+                Invoice
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

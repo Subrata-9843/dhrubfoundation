@@ -1,0 +1,40 @@
+/* Custom CSS overrides */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+:root {
+  --color-sea: #2E8B57;
+  --color-sea-light: #3CB371;
+  --color-sea-dark: #1C3D3A;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Animation for buttons */
+.btn-hover {
+  transition: all 0.3s ease;
+}
+
+.btn-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-sea);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-sea-light);
+}

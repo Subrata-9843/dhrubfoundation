@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="py-12">
+  <div class="container mx-auto px-4">
+    <h1 class="text-3xl font-bold mb-8 text-center">Our Gallery</h1>
+    
+    {% if current_user.is_authenticated %}
+    <div class="text-right mb-6">
+      <a href="{{ url_for('upload') }}" class="bg-sea text-white px-4 py-2 rounded-lg inline-flex items-center">
+        <i data-feather="upload" class="mr-2"></i> Upload Images
+      </a>
+    </div>
+    {% endif %}
+    
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      {% for image in images %}
+      <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <img src="{{ url_for('static', filename='uploads/' + image) }}" alt="Gallery image" class="w-full h-48 object-cover">
+        <div class="p-4">
+          <h3 class="font-bold">Event {{ loop.index }}</h3>
+          <p class="text-sm text-gray-600">Date: 01 Jan 2023</p>
+        </div>
+      </div>
+      {% else %}
+      <div class="col-span-full text-center py-12">
+        <i data-feather="image" class="w-16 h-16 text-gray-400 mx-auto mb-4"></i>
+        <h3 class="text-xl font-bold">No images found</h3>
+        <p class="text-gray-600">Check back later for updates</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

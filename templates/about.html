@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="py-12">
+  <div class="container mx-auto px-4 max-w-4xl">
+    <h1 class="text-3xl font-bold mb-8 text-center">About Dhrub Foundation</h1>
+    
+    <div class="bg-white rounded-lg shadow-md p-8 mb-8">
+      <h2 class="text-2xl font-bold mb-4">Our Story</h2>
+      <p class="mb-4">Founded in 2010, Dhrub Foundation began as a small initiative to provide education to children in rural West Bengal. Today, we operate in 5 states, impacting over 50,000 lives annually.</p>
+      <p>Our name "Dhrub" comes from the Sanskrit word meaning "steadfast" - reflecting our commitment to sustainable change.</p>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <h3 class="text-xl font-bold mb-4 flex items-center">
+          <i data-feather="target" class="text-sea mr-2"></i> Mission
+        </h3>
+        <p>To empower marginalized communities through education, healthcare, and livelihood programs that create lasting change.</p>
+      </div>
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <h3 class="text-xl font-bold mb-4 flex items-center">
+          <i data-feather="eye" class="text-sea mr-2"></i> Vision
+        </h3>
+        <p>A world where every individual has access to quality education, healthcare, and opportunities to thrive.</p>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

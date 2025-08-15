@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="py-12">
+  <div class="container mx-auto px-4">
+    <h1 class="text-3xl font-bold mb-8 text-center">Our Team</h1>
+    
+    <div class="mb-12">
+      <h2 class="text-2xl font-bold mb-6 text-center border-b pb-2">Founders</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for member in founders %}
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+          <div class="h-64 overflow-hidden">
+            {% if member.image %}
+            <img src="{{ url_for('static', filename='images/members/' + member.image) }}" alt="{{ member.name }}" class="w-full h-full object-cover">
+            {% else %}
+            <img src="{{ url_for('static', filename='images/members/default.jpg') }}" alt="Default" class="w-full h-full object-cover">
+            {% endif %}
+          </div>
+          <div class="p-4">
+            <h3 class="font-bold text-lg">{{ member.name }}</h3>
+            <p class="text-sea">{{ member.role }}</p>
+            <p class="mt-2">{{ member.bio|default('', true) }}</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    
+    <div>
+      <h2 class="text-2xl font-bold mb-6 text-center border-b pb-2">Administrative Team</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for member in admin %}
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+          <div class="h-64 overflow-hidden">
+            {% if member.image %}
+            <img src="{{ url_for('static', filename='images/members/' + member.image) }}" alt="{{ member.name }}" class="w-full h-full object-cover">
+            {% else %}
+            <img src="{{ url_for('static', filename='images/members/default.jpg') }}" alt="Default" class="w-full h-full object-cover">
+            {% endif %}
+          </div>
+          <div class="p-4">
+            <h3 class="font-bold text-lg">{{ member.name }}</h3>
+            <p class="text-sea">{{ member.role }}</p>
+            <p class="mt-2">{{ member.bio|default('', true) }}</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

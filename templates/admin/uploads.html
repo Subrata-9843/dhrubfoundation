@@ -1,0 +1,38 @@
+{% extends "admin/base.html" %}
+{% block content %}
+<div class="container mx-auto px-4 py-8 max-w-3xl">
+  <h1 class="text-2xl font-bold mb-6">Upload Media</h1>
+  
+  <form method="POST" enctype="multipart/form-data" class="bg-white rounded-lg shadow-md p-6 space-y-6">
+    <div>
+      <label for="files" class="block font-medium mb-2">Select Files</label>
+      <input type="file" id="files" name="files" multiple 
+             class="w-full px-4 py-2 border rounded-lg" required>
+      <p class="text-sm text-gray-500 mt-1">Allowed formats: JPG, PNG, GIF. Max size: 5MB per file.</p>
+    </div>
+    
+    <div>
+      <label for="category" class="block font-medium mb-2">Category</label>
+      <select id="category" name="category" class="w-full px-4 py-2 border rounded-lg">
+        <option value="gallery">Gallery</option>
+        <option value="events">Events</option>
+        <option value="team">Team</option>
+        <option value="projects">Projects</option>
+      </select>
+    </div>
+    
+    <div>
+      <label for="visibility" class="block font-medium mb-2">Visibility</label>
+      <select id="visibility" name="visibility" class="w-full px-4 py-2 border rounded-lg">
+        <option value="public">Public</option>
+        <option value="private">Private</option>
+        <option value="members">Members Only</option>
+      </select>
+    </div>
+    
+    <div class="pt-4">
+      <button type="submit" class="bg-sea text-white px-6 py-3 rounded-lg font-bold">Upload Files</button>
+    </div>
+  </form>
+</div>
+{% endblock %}
